@@ -1,90 +1,62 @@
 // Variables
+let currentPhaseIndex = 0;
 
-let currentPhaseIndex = 0
+const builtInSelections = {
+    top: ["shirt", "tank top"],
+    bottom: [],
+    shoe: [],
+    accessories: [],
+};
 
-let builtInSelections = {
-    "top" : [
-        "shirt",
-        "tnaker",
-        
-    ],
-    "bottom" : [],
-    "shoe" : [],
-    "accessories": [],
-}
-
-
-let outfit = {
-    top : null,
-    bottom : null,
-    shoe : null,
-    accessories: null
-}
-
-
+const outfit = {
+    top: null,
+    bottom: null,
+    shoe: null,
+    accessories: null,
+};
 
 // Class for rendering scene
 class ClothingSelection {
-    constructor(name, displayName){
-        this.displayName = displayName
-        this.name = name
-        this.setSelectionNames()
-        this.selection = this.configureSelection()
-    }
-    setSelectionNames( ){
-        this.selectionNames = []
-        builtInSelections[this.name].forEach( name=>{
-            this.selectionNames.push(name)
-        })
+    constructor(name, displayName) {
+        this.name = name;
+        this.displayName = displayName;
+        this.selectionNames = [...builtInSelections[name]];
+        this.selection = this.configureSelection();
     }
 
-    configureSelection( ){
-
+    configureSelection() {
+        // Configuration logic can be added here
     }
 }
 
-let scenes = {
-    "top" : new ClothingSelection("top", "Top"),
-    "bottom" : new ClothingSelection("bottom", "Bottom"),
-    "shoe" : new ClothingSelection("shoe", "Shoe"),
-    "accessories": new ClothingSelection("accessories", "Accessories"),
-}
+// Initialize scenes
+const scenes = {
+    top: new ClothingSelection("top", "Top"),
+    bottom: new ClothingSelection("bottom", "Bottom"),
+    shoe: new ClothingSelection("shoe", "Shoe"),
+    accessories: new ClothingSelection("accessories", "Accessories"),
+};
 
 // Functions
-function configurePage(){
-    let phases = [
-        "top",
-        "bottom",
-        "accessories",
-        "shoe"
-    ]
-
-
-
-
-    renderSelection(phases[currentPhaseIndex])
+function configurePage() {
+    const phases = ["top", "bottom", "accessories", "shoe"];
+    renderSelection(phases[currentPhaseIndex]);
 }
 
+function renderSelection(phaseName) {
+    const currentScene = scenes[phaseName];
 
-function renderSelection(  phaseName ){
-    let currentScene = scenes[phaseName]
+    document.getElementById("part-name").innerText = currentScene.displayName;
 
-    let title = document.getElementById("part-name") 
-    title.innerText = scenes[phaseName].displayName
+    const dropDown = document.getElementById("selection-drop-down");
+    dropDown.innerHTML = "";
 
-    let dropDown = document.getElementById("selection-drop-down")
-    dropDown.innerHTML = ""
-
-
-    currentScene.selectionNames.forEach ( selection => {
-        let option = document.createElement("option")
-        option.textContent = selection
-        dropDown.appendChild(option)
-    })
+    currentScene.selectionNames.forEach((selection) => {
+        const option = document.createElement("option");
+        option.textContent = selection;
+        dropDown.appendChild(option);
+    });
 }
-
-
-
 
 // Main loop
-configurePage()
+configurePage();
