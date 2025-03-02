@@ -9,10 +9,17 @@ class ClothingItem {
 }
 
 const builtInSelections = {
-    top: ["shirt", "tank top"],
-    bottom: ["apple bottom jeans"],
-    shoe: ["boots with the fur"],
-    accessory: ["e"],
+    top: [
+        new ClothingItem("shirt", "images/a.jpg"), new ClothingItem("tank top", "images/a.jpg"),
+    ],
+    bottom: [
+        new ClothingItem("apple Bottom Jeans", "images/a.jpg"),
+    ],
+    shoe: [
+        new ClothingItem("boots with the fur", "images/a.jpg"),
+    ],
+
+    accessory: [new ClothingItem("neckalce", "images/a.jpg")],
 };
 
 const outfit = {
@@ -41,25 +48,32 @@ function configurePage() {
         console.log(selector)
         const none = document.createElement("option")
         let renderer = ref.getElementsByClassName("piece-renderer")[0]
-
+        let pathLookup = {}
         none.textContent = "None"
         selector.appendChild(none)
         builtInSelections[section].forEach(piece => {
             const option = document.createElement("option")
+            pathLookup[piece.name ] = piece.path
             option.textContent = piece.name
             selector.appendChild(option)
         });
 
 
-        selector.addEventListener("change", (value)=>{
-            updateRender(renderer,value)
+        selector.addEventListener("change", (event)=>{
+            if (event.target.value == "None"){
+                updateRender( renderer,"")
+
+            }else{
+                updateRender( renderer, pathLookup[event.target.value] )
+
+            }
 
         })
     });
 }
 
 function updateRender(renderer, value){
-    // Set the renderer to have image of value
+    renderer.src = value
     return
 }
 
