@@ -10,7 +10,7 @@
     <h1>
         CLOTHES CUSTOMIZER 
     </h1>
-    <div id="scene holder">
+    <div id="scene-holder">
         <div id="selection-section">
             <!-- 
             current clothing part
@@ -32,13 +32,29 @@
 
             <h2>Selection</h2>
         </div>
+
+        <div id="outfit-display">
+            <div id="top-holder">
+                Top
+                <canvas></canvas>
+            </div>
+            <div id="bottom-holder">
+                Bottoms
+                <canvas></canvas>
+            </div>
+            <div id="shoe-holder">
+                Shoe
+                <canvas></canvas>
+            </div>
+            <div id="accessories-holder">
+                Accessories
+                <canvas></canvas>
+            </div>
+        </div>
+        
     </div>
-    <!-- 
-     Title
-     Big area for the canvases to move around in
-    
-    
-    -->
-     <script src="src/main.js"></script>
+    <button id="back_but"> Previous Selection</button>
+    <button id="next_but"> Next Selection</button>
+    <script src="src/main.js"></script>
 </body>
 </html>
