@@ -10,51 +10,29 @@
     <h1>
         CLOTHES CUSTOMIZER 
     </h1>
-    <div id="scene-holder">
-        <div id="selection-section">
-            <!-- 
-            current clothing part
-            upload
-            select
-            -->
-
-            <h2 id="part-name"></h2>
-            <select id="selection-drop-down">
-
-            </select>
+    <div id="cloth-sections">
+        <div id="top" class="cloth-section">
+            Top
+            <select class="piece-selector"></select>
+            <img class="piece-renderer"></img>
         </div>
-        <div id="renderer">
-            <!--
-            Selection 
-            Label
-            Canvas
-            -->
-
-            <h2>Selection</h2>
+        <div id="bottom" class="cloth-section">
+            Bottom
+            <select class="piece-selector"></select>
+            <img class="piece-renderer"></img>
         </div>
-
-        <div id="outfit-display">
-            <div id="top-holder">
-                Top
-                <canvas></canvas>
-            </div>
-            <div id="bottom-holder">
-                Bottoms
-                <canvas></canvas>
-            </div>
-            <div id="shoe-holder">
-                Shoe
-                <canvas></canvas>
-            </div>
-            <div id="accessories-holder">
-                Accessories
-                <canvas></canvas>
-            </div>
+        <div id="accessory" class="cloth-section">
+            Accessory
+            <select class="piece-selector"></select>
+            <img class="piece-renderer"></img>
         </div>
-        
+        <div id="shoe" class="cloth-section">
+            Shoe
+            <select class="piece-selector"></select>
+            <img class="piece-renderer"></img>
+        </div>
     </div>
-    <button id="back_but"> Previous Selection</button>
-    <button id="next_but"> Next Selection</button>
+    
     <script src="src/main.js"></script>
 </body>
 </html>
