@@ -7,6 +7,15 @@ body {
     font-family: Arial, sans-serif;
 }
 
+#main-scene {
+    display: flex;
+    flex-direction:row;
+    align-items: center;
+    text-align: center;
+    font-family: Arial, sans-serif;
+    
+}
+
 /* Stack clothing sections vertically */
 #cloth-sections {
     display: flex;
@@ -40,4 +49,27 @@ body {
     height: 100px;
     border: 1px solid #000;
     background-color: white;
+}
+
+#full-render {
+    position: relative; /* Needed for absolute positioning of children */
+    width: 400px;
+    height: 500px;
+    background-image: url('../clothingImages/mannequin_prototype.png');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    overflow: hidden;
+    border: 2px solid black;
+}
+
+.stacked-img {
+    position: absolute; /* Allows free movement */
+    width: 100px; /* Default size */
+    height: auto;
+    cursor: grab; /* Show grab cursor */
+}
+
+.stacked-img:active {
+    cursor: grabbing; /* Show grabbing cursor */
 }
