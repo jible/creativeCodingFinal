@@ -1,3 +1,4 @@
+// TODO: Scale, Add second shoe and mirror on x axis, upload photo, color algorithm, rating system?
 class ClothingItem {
     constructor(name,path){
         this.name = name
@@ -5,18 +6,52 @@ class ClothingItem {
     }
 }
 
-const builtInSelections = {
-    top: [
-        new ClothingItem("shirt", "images/a.jpg"), new ClothingItem("tank top", "images/b.png"),
-    ],
-    bottom: [
-        new ClothingItem("apple Bottom Jeans", "images/b.png"),
-    ],
-    shoe: [
-        new ClothingItem("boots with the fur", "images/a.jpg"),
-    ],
 
-    accessory: [new ClothingItem("neckalce", "images/a.jpg")],
+let simpleV2 = {
+
+    "top":[
+        "coat",
+        "crop",
+        "polo",
+        "sweater",
+        "tube",
+    ],
+    "bottom":[
+        "khaki",
+        "skirt",
+        "snow",
+        "sweat",
+        "yoga",
+    ],
+    "shoe":[
+        "boot",
+        "run",
+        "converse",
+        "timb","ugg"
+
+    ],
+    "accessory":[
+        "chain",
+        "cowboy",
+        "mario",
+        "marx",
+        "prop"
+    ],
+}
+
+
+function makePath(section, name){
+    return `clothingImages/${section}/${name}.png`
+}
+
+
+
+
+const builtInSelections = {
+    top: [],
+    bottom: [],
+    shoe: [],
+    accessory: [],
 };
 
 const outfit = {
@@ -42,6 +77,17 @@ function configurePage() {
 
 
     sections.forEach(section => {
+        for (let i = 0; i < simpleV2[section].length; i++){
+            let current = simpleV2[section][i]
+            builtInSelections[section].push(new ClothingItem(current, makePath(section, current)))
+        }
+        
+        // for (let i = 0; i < simple[section].length; i++){
+        //     let current = simple[section][i]
+        //     builtInSelections[section].push(new ClothingItem(current[0], current[1]))
+        // }
+
+
         fullRenderReferences[section] = document.getElementById(section + "-on-full-render")
         makeDraggable(fullRenderReferences[section], document.getElementById("full-render"))
         let ref = document.getElementById(section)
