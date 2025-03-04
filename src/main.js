@@ -88,7 +88,6 @@ function configurePage() {
 
 
         // size slider
-        const base = 20;
         let slider = ref.getElementsByClassName("size-slider")[0];
         slider.addEventListener("input", (event) => {
             fullRenderReferences[section].style.width = `${event.target.value}px`;
@@ -217,4 +216,5 @@ configurePage();
 // Ai Conversations
 /*
 https://chatgpt.com/share/67c6997b-7710-8000-adff-5106454dba2d
+https://chatgpt.com/share/67c69a0a-23e4-8000-bc28-b4de5a2a7d2c
 */
