@@ -1,4 +1,3 @@
-// TODO: Scale, Add second shoe and mirror on x axis, upload photo, color algorithm, rating system?
 class ClothingItem {
     constructor(name, path) {
         this.name = name;
@@ -7,34 +6,11 @@ class ClothingItem {
 }
 
 let simpleV2 = {
-    "top": [
-        "coat",
-        "crop",
-        "polo",
-        "sweater",
-        "tube",
-    ],
-    "bottom": [
-        "khaki",
-        "skirt",
-        "snow",
-        "sweat",
-        "yoga",
-    ],
-    "shoe": [
-        "boot",
-        "run",
-        "converse",
-        "timb", "ugg"
-    ],
-    "accessory": [
-        "chain",
-        "cowboy",
-        "mario",
-        "marx",
-        "prop"
-    ],
-}
+    "top": ["coat", "crop", "polo", "sweater", "tube"],
+    "bottom": ["khaki", "skirt", "snow", "sweat", "yoga"],
+    "shoe": ["boot", "run", "converse", "timb", "ugg"],
+    "accessory": ["chain", "cowboy", "mario", "marx", "prop"]
+};
 
 function makePath(section, name) {
     return `clothingImages/${section}/${name}.png`;
@@ -51,70 +27,90 @@ const outfit = {
     top: null,
     bottom: null,
     shoe: null,
-    accessory: null, // Changed from 'accessories' to 'accessory'
+    accessory: null,
 };
 
 let fullRenderReferences = {};
 
-// Functions
 function configurePage() {
-    let sections = [
-        "top",
-        "bottom",
-        "accessory",
-        "shoe"
-    ];
+    let sections = ["top", "bottom", "accessory", "shoe"];
 
     sections.forEach(section => {
-        for (let i = 0; i < simpleV2[section].length; i++) {
-            let current = simpleV2[section][i];
-            builtInSelections[section].push(new ClothingItem(current, makePath(section, current)));
-        }
-
-        fullRenderReferences[section] = document.getElementById(section + "-on-full-render");
-        makeDraggable(fullRenderReferences[section], document.getElementById("full-render"));
-        let ref = document.getElementById(section);
-        let selector = ref.getElementsByClassName("piece-selector")[0];
-        const none = document.createElement("option");
-        let renderer = ref.getElementsByClassName("piece-renderer")[0];
-        let lookup = {};
-        none.textContent = "None";
-        selector.appendChild(none);
-
-        // upload button config
-        let uploadButton = ref.getElementsByClassName("img-upload")[0]; // Select the first element
-        console.log(uploadButton); // Changed from print to console.log
-        setupImageUploader(uploadButton, section, selector, lookup, renderer, fullRenderReferences[section]);
-
-
-        // size slider
-        let slider = ref.getElementsByClassName("size-slider")[0];
-        slider.addEventListener("input", (event) => {
-            fullRenderReferences[section].style.width = `${event.target.value}px`;
-            fullRenderReferences[section].style.height = 'auto'
-        });
-
-
-        builtInSelections[section].forEach(piece => {
-            const option = document.createElement("option");
-            lookup[piece.name] = piece;
-            option.textContent = piece.name;
-            selector.appendChild(option);
-        });
-
-        selector.addEventListener("change", (event) => {
-            if (event.target.value == "None") {
-                outfit[section] = null;
-                updateRender(renderer, "");
-            } else {
-                outfit[section] = lookup[event.target.value];
-                updateRender(renderer, fullRenderReferences[section], lookup[event.target.value].path);
-            }
-        });
+        configureSection(section);
     });
 }
 
-// function from chatgpt
+function configureSection(section) {
+    // Set up clothing items for the section
+    setupClothingItems(section);
+
+    // Set up full render reference and draggable behavior
+    setUpFullRender(section);
+
+    // Set up the file upload functionality
+    setUpUploadButton(section);
+
+    // Set up the size slider for resizing
+    setUpSizeSlider(section);
+
+    // Set up the piece selector dropdown
+    setUpPieceSelector(section);
+}
+
+function setupClothingItems(section) {
+    simpleV2[section].forEach(item => {
+        builtInSelections[section].push(new ClothingItem(item, makePath(section, item)));
+    });
+}
+
+function setUpFullRender(section) {
+    fullRenderReferences[section] = document.getElementById(`${section}-on-full-render`);
+    makeDraggable(fullRenderReferences[section], document.getElementById("full-render"));
+}
+
+function setUpUploadButton(section) {
+    let ref = document.getElementById(section);
+    let uploadButton = ref.getElementsByClassName("img-upload")[0];
+    setupImageUploader(uploadButton, section, ref.getElementsByClassName("piece-selector")[0], {}, ref.getElementsByClassName("piece-renderer")[0], fullRenderReferences[section]);
+}
+
+function setUpSizeSlider(section) {
+    let ref = document.getElementById(section);
+    let slider = ref.getElementsByClassName("size-slider")[0];
+    slider.addEventListener("input", (event) => {
+        fullRenderReferences[section].style.width = `${event.target.value}px`;
+        fullRenderReferences[section].style.height = 'auto';
+    });
+}
+
+function setUpPieceSelector(section) {
+    let ref = document.getElementById(section);
+    let selector = ref.getElementsByClassName("piece-selector")[0];
+    const none = document.createElement("option");
+    let renderer = ref.getElementsByClassName("piece-renderer")[0];
+    none.textContent = "None";
+    selector.appendChild(none);
+
+    let lookup = {};
+
+    builtInSelections[section].forEach(piece => {
+        const option = document.createElement("option");
+        lookup[piece.name] = piece;
+        option.textContent = piece.name;
+        selector.appendChild(option);
+    });
+
+    selector.addEventListener("change", (event) => {
+        if (event.target.value == "None") {
+            outfit[section] = null;
+            updateRender(renderer, "");
+        } else {
+            outfit[section] = lookup[event.target.value];
+            updateRender(renderer, fullRenderReferences[section], lookup[event.target.value].path);
+        }
+    });
+}
+
 function makeDraggable(element, parentDiv) {
     element.addEventListener("mousedown", (event) => {
         let imgElement = event.target;
@@ -149,12 +145,6 @@ function makeDraggable(element, parentDiv) {
         imgElement.ondragstart = () => false; // Disable default drag
     });
 }
-
-// Apply the draggable functionality to each image with its parent div
-document.querySelectorAll(".stacked-img").forEach(img => {
-    let parentDiv = document.getElementById("full-render"); // or dynamically pass different div
-    makeDraggable(img, parentDiv);
-});
 
 function updateRender(renderer, fullRenderer, value) {
     renderer.src = value;
@@ -208,13 +198,3 @@ function setupImageUploader(button, section, selector, lookup, renderer, fullRen
 
 // Main loop
 configurePage();
-
-
-
-
-
-// Ai Conversations
-/*
-https://chatgpt.com/share/67c6997b-7710-8000-adff-5106454dba2d
-https://chatgpt.com/share/67c69a0a-23e4-8000-bc28-b4de5a2a7d2c
-*/
