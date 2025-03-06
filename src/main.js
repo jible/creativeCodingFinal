@@ -155,7 +155,7 @@ const colorPicker = document.getElementById("colorPicker");
 const colorValue = document.getElementById("colorValue");
 colorPicker.addEventListener("input", (event) => {
   colorValueHex.textContent = event.target.value;
-  let HSV = hexToHSV(event.target.value)
+  let HSV = hexToHSV(event.target.value);
   colorValueHSV.textContent = `H: ${HSV.h}, S: ${HSV.s}, V:${HSV.v}`;
 });
 
@@ -175,10 +175,17 @@ function hexToHSV(hex) {
   let delta = max - min;
 
   // Depending on which channel is dominant, there is a different way of calculating the Hue value. This is a method of finding what degree on a color wheel that this color would be, and subsequently
-    // Finding out what its analgous, complementary, etc. color sets are by adding to this value (rotating around the wheel)
+  // Finding out what its analgous, complementary, etc. color sets are by adding to this value (rotating around the wheel)
   // I learned this algorithm from a chatGPT conversation, where I had it tutor me about the reasons behind this calculation and how it works.
-  // Convo Link: 
+  // Convo Link:
   let hue = 0;
+  let complement = 0;
+  let adj1 = 0,
+    adj2 = 0;
+  let tri1 = 0,
+    tri2 = 0;
+  let tet1 = 0,
+    tet2 = 0;
   // Avoid division by 0 for gray colors.
   if (delta !== 0) {
     if (max === red) {
@@ -191,12 +198,25 @@ function hexToHSV(hex) {
     hue = Math.round(hue * 60);
     // Don't allow for negative angles on the color wheel.
     if (hue < 0) hue += 360;
+
+    // Calculate parts of the palette that satisfyingly match the color picked.
+    complement = (hue + 180) % 360;
+    console.log("Complementary: ", complement); // Opposite side
+    adj1 = (hue + 30) % 360;
+    adj2 = (hue + 330) % 360;
+    console.log(`Adjacents ${hue}, ${adj1}, ${adj2}`); // +/- 30
+    tri1 = (complement + 30) % 360;
+    tri2 = (complement + 330) % 360;
+    console.log(`Triad: ${hue}, ${tri1}, ${tri2}`); // Compliment +/- 30
+    tet1 = tri1;
+    tet2 = adj1;
+    console.log(`Tetrads: ${complement}, ${tet1}, ${hue}, ${tet2}`);
   }
 
   // If the difference between the most dominant channel and least dominant channel is large, the color is very saturated, if they are close, then the color is less saturated.
   let saturation = 0;
-  if (max != 0){
-    saturation = (delta / max) * 100
+  if (max != 0) {
+    saturation = (delta / max) * 100;
   }
   // Value is based off of the intensity of the most dominant channel
   let value = max * 100;
