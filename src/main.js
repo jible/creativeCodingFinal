@@ -32,9 +32,23 @@ const outfit = {
 };
 
 let fullRenderReferences = {};
+let colorWheel = document.getElementById("color-wheel")
+let colorWheelCtx = colorWheel.getContext("2d")
+colorWheel.width = 100
+colorWheel.Height = 100
+colorWheel.style.height = "100px"
+colorWheel.style.width = "100px"
 
 // Functions
 function configurePage() {
+  var colorWheelImage = new Image()
+  
+  colorWheelImage.onload = ()=>{
+    colorWheelCtx.drawImage(colorWheelImage, 0,0, colorWheel.width, colorWheel.height)
+  }
+  colorWheelImage.src = "images/colorWheel.png"
+
+
   let sections = ["top", "bottom", "accessory", "shoe"];
 
   sections.forEach((section) => {
@@ -223,5 +237,51 @@ function hexToHSV(hex) {
 
   return { h: hue, s: saturation, v: value };
 }
+
+// https://chatgpt.com/share/67d32ced-bf78-8012-9ad9-37af5c26a773
+function plotColor(hex) {
+  const size = colorWheel.width / 2;
+  const radius = size - 10; // Padding
+  const hsv = hexToHSV(hex);
+  const hue = hsv.h;
+  const sat = hsv.s;
+  const angle = (-hue * Math.PI) / 180; // Flip Y-axis
+
+  const r = (sat / 100) * radius; // Saturation controls radius
+
+  const x = size + Math.cos(angle) * r;
+  const y = size - Math.sin(angle) * r; // Flip Y for correct orientation
+
+  // Redraw the color wheel before plotting points
+  let colorWheelImage = new Image();
+  colorWheelImage.onload = () => {
+    colorWheelCtx.clearRect(0, 0, colorWheel.width, colorWheel.height);
+    colorWheelCtx.drawImage(colorWheelImage, 0, 0, colorWheel.width, colorWheel.height);
+
+    // Now plot the color point on top
+    colorWheelCtx.fillStyle = "black"; // Change fill color to black
+    colorWheelCtx.beginPath();
+    colorWheelCtx.arc(x, y, 6, 0, Math.PI * 2);
+    colorWheelCtx.fill();
+  };
+  colorWheelImage.src = "images/colorWheel.png"; // Ensure the correct path
+}
+
+
+
+function updateColorsDisplay(colors){
+  colorWheelCtx.clearRect(0, 0, colorWheel.width, colorWheel.height);
+  
+  
+}
+
+
+
+
+
 // Main loop
 configurePage();
+plotColor('#FF00FF')
+
+
+

@@ -110,7 +110,7 @@ video {
     position: relative;
     width: 400px;
     height: 500px;
-    background-image: url('../clothingImages/mannequin_prototype.png'), url('../clothingImages/gray_texture.jpg');
+    background-image: url('../clothingImages/mannequin_prototype.png');
     background-size: contain, cover;
     background-position: center, center;
     background-repeat: no-repeat, repeat;
