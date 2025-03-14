@@ -33,6 +33,7 @@ function compGrade(currColor, newColor) {
     s: currColor.s,
     v: currColor.v,
   };
+  console.log(`Compliment: ${complement.h}, newColor: ${newColor.h}`)
   var grade = calcCloseness(complement, newColor);
   return grade;
 }
@@ -95,7 +96,7 @@ function calcCloseness(color1, color2) {
   var sClose = proximity(color1.s, color2.s);
   var vClose = proximity(color1.v, color2.v);
 
-  var closeness = (hClose + sClose + vClose) / 3;
+  var closeness = (hClose*5 + sClose + vClose) / 7;
   console.log(
     `HUE GRADE ${hClose}, SAT GRADE ${sClose}, VAL GRADE ${vClose}, AVG ${closeness}`
   );

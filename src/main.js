@@ -123,13 +123,16 @@ var adjDisplay = document.getElementById("adj-score")
 var triDisplay = document.getElementById("tri-score")
 var tetDisplay = document.getElementById("tet-score")
 var monoDisplay = document.getElementById("mono-score")
+var totalDisplay = document.getElementById("total-score")
 
 function updateScoreRenders(scores){
-  compDisplay.innerText = average(scores.comp)
-  adjDisplay.innerText = average(scores.adj)
-  triDisplay.innerText = average(scores.tri)
-  tetDisplay.innerText = average(scores.tet)
-  monoDisplay.innerText = average(scores.mono)
+  let allGrades = [average(scores.comp), average(scores.adj), average(scores.tri),average(scores.tet), average(scores.mono)]
+  compDisplay.innerText = `Complementary Grade: ${allGrades[0]}`
+  adjDisplay.innerText = `Adjacent Grade: ${allGrades[1]}`
+  triDisplay.innerText = `Triad Grade: ${allGrades[2]}`
+  tetDisplay.innerText = `Tetrad Grade: ${allGrades[3]}`
+  monoDisplay.innerText =`Monochromatic Grade: ${allGrades[4]}`
+  totalDisplay.innerText =`Fashionista Score: ${Math.max(...allGrades)}`
 }
 
 
@@ -148,7 +151,7 @@ function average(input){
     output+= input[i]
   }
   output = output/input.length
-  return output
+  return Math.floor(output)
 }
 
 // Main loop
