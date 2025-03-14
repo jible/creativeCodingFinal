@@ -1,7 +1,8 @@
 const colorPicker = document.getElementById("colorPicker");
 const colorValue = document.getElementById("colorValue");
 
-var colors = []
+var colorsHex = []
+var colorsHSV = []
 var colorsRGB = []
 let fullRenderReferences = {};
 
@@ -9,13 +10,15 @@ let fullRenderReferences = {};
 function configurePage() {
   const addColorButton = document.getElementById("add-color")
   addColorButton.addEventListener('click', ()=>{
+    colorsHex.push(colorPicker.value)
     colorsRGB.push(hexToRGB(colorPicker.value))
-    colors.push ( hexToHSV( colorPicker.value) )
+    colorsHSV.push ( hexToHSV( colorPicker.value) )
     colorsUpdated()
   })
   const clearColorButton = document.getElementById("clear-colors")
   clearColorButton.addEventListener('click' , ()=>{
-    colors = []
+    colorsHSV = []
+    colorsHex = []
     colorsRGB = []
     colorsUpdated()
   })
@@ -109,12 +112,15 @@ function updateColorList(colors){
     
   let colorHolder = document.getElementById("outfit-colors")
   colorHolder.innerHTML = ''
+  var count = 0
   colors.forEach(color=>{
+    
     let newColor = document.createElement("div")
-    newColor.style.width = "20px"
-    newColor.style.height = "20px"
     newColor.style.backgroundColor = `rgb(${color[0]}, ${color[1]}, ${color[2]})`;
+    newColor.style.color = `rgb(${(255 - color[0] )}, ${(255 - color[1] )}, ${(255 - color[2] )})`
+    newColor.innerText =`H: ${Math.floor(colorsHSV[count].h)}, S: ${Math.floor(colorsHSV[count].s)}, V:${Math.floor(colorsHSV[count].v)}`
     colorHolder.appendChild(newColor);
+    count ++
   })
 }
 
@@ -126,6 +132,16 @@ var monoDisplay = document.getElementById("mono-score")
 var totalDisplay = document.getElementById("total-score")
 
 function updateScoreRenders(scores){
+  if (colorsHSV.length <= 2){
+    compDisplay.innerText = ''
+    adjDisplay.innerText = ''
+    triDisplay.innerText = ''
+    tetDisplay.innerText =  ''
+    monoDisplay.innerText = ''
+    totalDisplay.innerText = ''
+    return
+  }
+
   let allGrades = [average(scores.comp), average(scores.adj), average(scores.tri),average(scores.tet), average(scores.mono)]
   compDisplay.innerText = `Complementary Grade: ${allGrades[0]}`
   adjDisplay.innerText = `Adjacent Grade: ${allGrades[1]}`
@@ -138,7 +154,7 @@ function updateScoreRenders(scores){
 
 
 function colorsUpdated(){
-  var scores = adjustGrade(colors)
+  var scores = adjustGrade(colorsHSV)
   updateColorList(colorsRGB)
   updateScoreRenders(scores)
 }

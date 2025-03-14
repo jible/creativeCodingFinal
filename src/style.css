@@ -3,7 +3,7 @@
     src: url('JETSET.TTF') format('truetype');
     font-weight: normal;
     font-style: normal;
-  }
+}
 
 /* Center everything */
 body {
@@ -13,23 +13,17 @@ body {
     text-align: center;
     font-family: "jetset";
     padding: 20px;
-    background: linear-gradient(135deg, #090C08, #B9C6AE); /* Night to Ash Gray gradient */
-    color: #B9C6AE; /* Ash Gray for contrast */
+    background: linear-gradient(135deg, #090C08, #B9C6AE);
+    color: #B9C6AE;
     background-size: 400% 400%;
     animation: gradientAnimation 15s ease infinite;
 }
 
 @keyframes gradientAnimation {
-    0% {
-      background-position: 0% 50%;
-    }
-    50% {
-      background-position: 100% 50%;
-    }
-    100% {
-      background-position: 0% 50%;
-    }
-  }
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
 
 video {
     width: 100%;
@@ -37,114 +31,38 @@ video {
     height: auto;
     border: 2px solid black;
 }
+
 #main-scene {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap; /* Ensures adaptability for smaller screens */
-    align-items: flex-start;
-    gap: 30px;
-}
-
-@media (max-width: 600px) {
-    #main-scene {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    #full-render {
-        width: 90%;
-    }
-
-    .cloth-section {
-        width: 90%;
-    }
-}
-
-/* Stack clothing sections vertically */
-#cloth-sections {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 20px; /* Space between sections */
+    gap: 30px;
 }
 
-/* Style for each clothing section */
-.cloth-section {
-    display: grid;
-    grid-template-columns: 1fr 1.5fr 1fr;
+#video-feed {
+    display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-items: center;
-    width: 100%;
-    max-width: 400px;
-    padding: 15px;
-    border: 2px solid #474056; /* English Violet */
-    border-radius: 12px;
-    background-color: #757083; /* Taupe Gray */
-    box-shadow: 0px 4px 8px rgba(9, 12, 8, 0.2);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    text-align: center;
 }
 
-.cloth-section:hover {
-    transform: translateY(-3px);
-    box-shadow: 0px 4px 8px rgba(9, 12, 8, 0.4);
+#colorPicker {
+    margin-top: 15px;
 }
 
-/* Ensure all selectors and text are aligned */
-.piece-selector {
-    width: 120px;
-    padding: 5px;
-    background-color: #8A95A5; /* Cadet Gray */
-    color: #090C08; /* Night for contrast */
-    border: 1px solid #474056;
+#outfit-info {
+    display: flex;
+    flex-direction: horizontal;
+    align-items: center;
+    gap: 20px;
 }
 
-/* Keep all canvases aligned across rows */
-.piece-renderer {
-    width: 100px;
-    height: 100px;
-    border: 1px solid #474056;
-    background-color: #B9C6AE; /* Ash Gray */
+#outfit-scores {
+    background: #090C08;
 }
 
-#full-render {
-    position: relative;
-    width: 400px;
-    height: 500px;
-    background-image: url('../clothingImages/mannequin_prototype.png');
-    background-size: contain, cover;
-    background-position: center, center;
-    background-repeat: no-repeat, repeat;
-    overflow: hidden;
-    border: 4px solid #474056; /* English Violet */
-    border-radius: 15px;
-    box-shadow: 5px 5px 15px rgba(9, 12, 8, 0.3);
-}
-
-#full-render::before {
-    content: "";
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: 1;
-}
-
-.stacked-img {
-    position: absolute;
-    width: 100px;
-    height: auto;
-    cursor: grab;
-    transition: transform 0.2s ease, opacity 0.2s ease, filter 0.3s;
-    filter: drop-shadow(3px 3px 5px rgba(9, 12, 8, 0.3));
-}
-
-.stacked-img:hover {
-    transform: rotate(-5deg) scale(1.1);
-    filter: brightness(1.1);
-}
-
-.stacked-img:active {
-    cursor: grabbing;
-    opacity: 0.7;
-    transform: rotate(0deg) scale(1.05);
+#outfit-colors {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
