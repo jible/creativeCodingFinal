@@ -45,7 +45,7 @@ navigator.mediaDevices
 colorPicker.addEventListener("input", (event) => {
   colorValueHex.textContent = event.target.value;
   let HSV = hexToHSV(event.target.value);
-  colorValueHSV.textContent = `H: ${HSV.h}, S: ${HSV.s}, V:${HSV.v}`;
+  colorValueHSV.textContent = `H: ${Math.floor(HSV.h)}, S: ${Math.floor(HSV.s)}, V:${Math.floor(HSV.v)}`;
 });
 
 
