@@ -15,9 +15,9 @@ function adjustGrade(colorPalette) {
   };
   return allScores;
 }
-function totalGrade(colorPalette, gradeFunc) {
+function totalComp(colorPalette, gradeFunc) {
   let scores = [];
-  for (i in length(colorPalette)) {
+  for (i in colorPalette.length) {
     var colorA = colorPalette[i];
     for (j in range(i + 1, length(colorPalette))) {
       scores.append(gradeFunc(colorA, colorB));

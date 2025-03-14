@@ -31,10 +31,30 @@ const outfit = {
   accessories: null,
 };
 
+
+const colorPicker = document.getElementById("colorPicker");
+const colorValue = document.getElementById("colorValue");
+
+var colors = []
+
 let fullRenderReferences = {};
 
 // Functions
 function configurePage() {
+  const addColorButton = document.getElementById("add-color")
+  addColorButton.addEventListener('click', ()=>{
+    colors.push ( hexToHSV( colorPicker.value) )
+    colorsUpdated()
+    console.log(colors)
+  })
+  const clearColorButton = document.getElementById("add-color")
+  clearColorButton.addEventListener('click' , ()=>{
+    colors = []
+    colorsUpdated()
+    console.log(colors)
+  })
+
+
   let sections = ["top", "bottom", "accessory", "shoe"];
 
   sections.forEach((section) => {
@@ -151,8 +171,7 @@ navigator.mediaDevices
   });
 
 // Color Picker
-const colorPicker = document.getElementById("colorPicker");
-const colorValue = document.getElementById("colorValue");
+
 colorPicker.addEventListener("input", (event) => {
   colorValueHex.textContent = event.target.value;
   let HSV = hexToHSV(event.target.value);
@@ -223,5 +242,52 @@ function hexToHSV(hex) {
 
   return { h: hue, s: saturation, v: value };
 }
+
+
+// Currently expects colors in rgb
+function updateColorList(colors){
+  let colorHolder = document.getElementById("outfit-colors")
+  colorHolder.innerHTML = ''
+  for (let color in colors){
+    let newColor = document.createElement("div")
+    newColor.style.backgroundColor = color
+    colorHolder.appendChild(newColor);
+  }
+}
+
+var compDisplay = document.getElementById("comp-score")
+var adjDisplay = document.getElementById("adj-score")
+var triDisplay = document.getElementById("tri-score")
+var tetDisplay = document.getElementById("tet-score")
+var monoDisplay = document.getElementById("mono-score")
+
+function updateScoreRenders(scores){
+  compDisplay.innerText = average(scores.comp)
+  adjDisplay.innerText = average(scores.comp)
+  triDisplay.innerText = average(scores.tri)
+  tetDisplay.innerText = average(scores.tet)
+  monoDisplay.innerText = average(scores.mono)
+}
+
+
+
+function colorsUpdated(){
+  var scores = adjustGrade(colors)
+  console.log(scores)
+
+  updateScoreRenders(scores)
+
+}
+
+
+
+function average(input){
+  var output = 0
+  for (let i in input){
+    output+= input[i]
+  }
+  output = output/input.length
+}
+
 // Main loop
 configurePage();

@@ -40,15 +40,33 @@
             <img class="stacked-img" id="accessory-on-full-render">
             <img class="stacked-img" id="shoe-on-full-render">
         </div>
+
+
+        <div id="outfit-info"> 
+            <div id="outfit-colors"></div>
+            <div id="outfit-scores">
+                <div id="comp-score"></div>
+                <div id="adj-score"></div>
+                <div id="tri-score"></div>
+                <div id="tet-score"></div>
+                <div id="mono-score"></div>
+            </div>
+        </div>
+
+
+
         <div id="video-feed">
             <h1>Choose a color from your clothes!</h1>
             <video id="webcam" autoplay playsinline></video>
             <input type="color" id="colorPicker">
             <p>Color Selected (HEX): <span id="colorValueHex">#000000</span></p>
             <p>Color Selected (HSV): <span id="colorValueHSV">H:0, S:0, V:0</span></p>
+            <button id="add-color">Add Color</button>
+            <button id="clear-colors">Clear Colors</button>
         </div>
     </div>
     
+    <script src="src/grade.js"></script>
     
     <script src="src/main.js"></script>
 </body>
