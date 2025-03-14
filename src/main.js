@@ -47,7 +47,7 @@ function configurePage() {
     colorsUpdated()
     console.log(colors)
   })
-  const clearColorButton = document.getElementById("add-color")
+  const clearColorButton = document.getElementById("clear-colors")
   clearColorButton.addEventListener('click' , ()=>{
     colors = []
     colorsUpdated()
@@ -171,7 +171,7 @@ navigator.mediaDevices
   });
 
 // Color Picker
-
+// convo link : https://chatgpt.com/share/67c92851-8358-800b-9ec7-ba9bee3a4462
 colorPicker.addEventListener("input", (event) => {
   colorValueHex.textContent = event.target.value;
   let HSV = hexToHSV(event.target.value);
