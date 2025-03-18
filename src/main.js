@@ -21,6 +21,7 @@ function configurePage() {
     colorsHex = [];
     colorsRGB = [];
     colorsUpdated();
+    clearText();
   });
 }
 
@@ -130,6 +131,7 @@ var totalDisplay = document.getElementById("total-score");
 var scoreExplanation = document.getElementById("score-explanation");
 
 function updateScoreRenders(scores) {
+  clearText()
   if (colorsHSV.length <= 2) {
     compDisplay.innerText = "";
     adjDisplay.innerText = "";
@@ -162,6 +164,11 @@ function updateScoreRenders(scores) {
   })
   scoreExplanation.innerText = `Outfit Explanation of Similarities:\n\n${explanationString}`;
 }
+function clearText(){
+  outfitClassification.innerText = ""
+  scoreExplanation.innerText = ""
+  
+}
 // Tells the user what color coordination they're closest to, and what that means
 function colorCoordClassification(allGrades) {
   let max = allGrades[0];
@@ -172,7 +179,7 @@ function colorCoordClassification(allGrades) {
       maxIndicies = [];
       maxIndicies.push(index);
     }
-    if (grade === max) {
+    else if (grade === max) {
       maxIndicies.push(index);
     }
   });
@@ -211,19 +218,19 @@ function colorCoordClassification(allGrades) {
 function outfitRank(score) {
   if (score === 100) {
     return "Fashion Master! Broke my circuitry!";
-  } else if (score <= 90) {
+  } else if (score >= 90) {
     return "Fashion Icon! Identifying nearby runways and modelling agencies...";
-  } else if (score <= 80) {
+  } else if (score >= 80) {
     return "Chic! Color coordination more than optimal!";
-  } else if (score <= 70) {
+  } else if (score >= 70) {
     return "Outfit is at par with human standards of color coordination";
-  } else if (score <= 60) {
+  } else if (score >= 60) {
     return "Outfit needs work in several key areas";
-  } else if (score <= 50) {
+  } else if (score >= 50) {
     return "Time to check the closet again, color coordination sub-optimal";
-  } else if (score <= 40) {
+  } else if (score >= 40) {
     return "Yikes, even without eyes I can see that this is a mistake.";
-  } else if (score <= 30) {
+  } else if (score >= 30) {
     return "Fashion nightmare! Don't even let the mirror catch you with this outfit on!";
   } else {
     return "ERROR: Fashion clash overload....";
