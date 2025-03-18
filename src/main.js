@@ -76,7 +76,7 @@ function hexToHSV(hex) {
   // Depending on which channel is dominant, there is a different way of calculating the Hue value. This is a method of finding what degree on a color wheel that this color would be, and subsequently
   // Finding out what its analgous, complementary, etc. color sets are by adding to this value (rotating around the wheel)
   // I learned this algorithm from a chatGPT conversation, where I had it tutor me about the reasons behind this calculation and how it works.
-  // Convo Link:
+  // Convo Link:https://chatgpt.com/share/67c92851-8358-800b-9ec7-ba9bee3a4462
   let hue = 0;
   // Avoid division by 0 for gray colors.
   if (delta !== 0) {
